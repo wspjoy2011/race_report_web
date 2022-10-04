@@ -1,0 +1,39 @@
+{% extends '_base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+
+{% block content %}
+<h2>Race results</h2>
+<table class="race_table">
+  <tr>
+    <th>№</th>
+    <th>Driver</th>
+    <th>Company</th>
+    <th>Time</th>
+  </tr>
+{% for race in race_table %}
+    {% if order == 'asc' %}
+        {% if loop.index <= 15 %}
+            <tr style="background-color: green">
+        {% else %}
+            <tr style="background-color: red">
+        {% endif %}
+    {% elif order == 'desc' %}
+        {% if loop.index <= race_table|length - 15 %}
+            <tr style="background-color: red">
+        {% else %}
+            <tr style="background-color: green">
+        {% endif %}
+    {% endif %}
+        <td>{{ race[0] }}</td>
+        <td>{{ race[1] }}</td>
+        <td>{{ race[2] }}</td>
+        <td>{{ race[3] }}</td>
+    </tr>
+{% endfor %}
+</table>
+
+{% endblock content %}

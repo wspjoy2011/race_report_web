@@ -1,0 +1,25 @@
+{% extends '_base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<table class="race_table">
+  <tr>
+    <th>Abbr</th>
+    <th>Driver Name</th>
+  </tr>
+{% for abbr, driver in drivers.items() %}
+    <tr id="race_table_tr_data">
+        <td>
+            <a href="/report/drivers/?driver_id={{ abbr }}">{{ abbr }}</a>
+        </td>
+        <td>
+            {{ driver[0] }}
+        </td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock content %}

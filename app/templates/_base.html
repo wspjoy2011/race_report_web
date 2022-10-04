@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link type="text/css" href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet"/>
+    <title>{% block title %} {% endblock title %}</title>
+</head>
+<body>
+<table class="table-page" border=0 cellpadding="0" cellspacing="0">
+<tr><td valign=top>
+{% block mainmenu %}
+		<div class="header">
+			<ul id="mainmenu" class="mainmenu">
+			<li class="logo">
+				<a href="/">
+					<div class="logo">
+					</div>
+				</a>
+			</li>
+{% for name, link in menu.items() %}
+	{% if not loop.last %}
+			<li><a href="{{ link }}">{{ name }}</a></li>
+	{% else %}
+			<li class="last"><a href="{{ link }}">{{ name }}</a></li>
+	{% endif %}
+{% endfor %}
+			</ul>
+			<div class="clear"></div>
+		</div>
+{% endblock mainmenu %}
+
+
+<table class="table-content" border=0 cellpadding="0" cellspacing="0">
+<tr>
+<!-- Sidebar left -->
+	<td valign="top" class="left-chapters">
+	<ul id="leftchapters">
+		<li class="selected">Top racers</li>
+		{% for top_driver in top_drivers %}
+		<li>{{ top_driver[0] }}. {{ top_driver[1] }}</li>
+		{% endfor %}
+		<li class="share">
+		<p>F1 Monaco Race 2018</p>
+		<a class="share-yt" href=https://www.youtube.com/watch?v=-YR-MQHrWew&list=PLfoNZDHitwjWaDZJpEbPjXZzkIZM3QWnJ"
+		   target="_blank" rel="nofollow">
+		</a>
+		</li>
+	</ul>
+</td>
+<!-- Sidebar end -->
+
+<td valign="top" class="content">
+	<!-- Breadcrumbs -->
+	{% block breadcrumbs %}
+	{% endblock %}
+
+<!-- Content block -->
+	<div class="content-text">
+{% block content %}
+{% endblock %}
+	</div>
+<!-- End content block -->
+
+</td></tr></table>
+</td></tr>
+<!-- Footer -->
+<tr><td valign=top>
+	<div id="footer">
+		<p>&copy;<span id="year"></span> Partial or complete copying of information from this site for distribution on other resources, including paper ones, is strictly prohibited.</p>
+	</div>
+</td></tr></table>
+<!-- Footer end -->
+
+<!-- JS include -->
+<script src="{{url_for('static', filename='js/get_year.js')}}"></script>
+
+</body>
+</html>
