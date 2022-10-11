@@ -1,0 +1,31 @@
+{% extends '_base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<table class="race_table">
+  <tr>
+    <th>Abbr</th>
+    <th>Driver Name</th>
+  </tr>
+    {% for abbr, name in drivers.items() %}
+    <tr id="race_table_tr_data">
+        <td>
+            {{ abbr }}
+        </td>
+        <td>
+            {% if name %}
+                {{ name[0] }}
+            {% else %}
+                Not Found
+            {% endif %}
+        </td>
+    </tr>
+{% endfor %}
+</table>
+
+<script src="{{ url_for('static', filename='js/sort_table.js') }}"></script>
+{% endblock content %}

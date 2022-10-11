@@ -6,7 +6,10 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link type="text/css" href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet"/>
+	<link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}"	type="image/x-icon">
+    <link type="text/css" href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet"/>
     <title>{% block title %} {% endblock title %}</title>
+	{% block head %}{% endblock head %}
 </head>
 <body>
 <table class="table-page" border=0 cellpadding="0" cellspacing="0">
@@ -22,9 +25,15 @@
 			</li>
 {% for name, link in menu.items() %}
 	{% if not loop.last %}
-			<li><a href="{{ link }}">{{ name }}</a></li>
+			<li><a class='action' href="{{ link }}">{{ name }}</a></li>
 	{% else %}
-			<li class="last"><a href="{{ link }}">{{ name }}</a></li>
+				<li class="last">
+				{% if user %}
+					Welcome <b>{{ user }}</b> / <a class='action' href="{{ url_for('logout') }}">Logout</a>
+				{% else %}
+					<a href="{{ url_for('registration') }}">Registration</a> / <a class='action' href="{{ link }}">{{ name }}</a>
+				{% endif %}
+				</li>
 	{% endif %}
 {% endfor %}
 			</ul>
@@ -40,13 +49,18 @@
 	<ul id="leftchapters">
 		<li class="selected">Top racers</li>
 		{% for top_driver in top_drivers %}
-		<li>{{ top_driver[0] }}. {{ top_driver[1] }}</li>
+		<li>
+			{{ top_driver[0] }}. {{ top_driver[1] }}
+		</li>
 		{% endfor %}
 		<li class="share">
-		<p>F1 Monaco Race 2018</p>
-		<a class="share-yt" href=https://www.youtube.com/watch?v=-YR-MQHrWew&list=PLfoNZDHitwjWaDZJpEbPjXZzkIZM3QWnJ"
-		   target="_blank" rel="nofollow">
-		</a>
+			<p>F1 Monaco Race 2018</p>
+			<a class="share-yt" href=https://www.youtube.com/watch?v=-YR-MQHrWew&list=PLfoNZDHitwjWaDZJpEbPjXZzkIZM3QWnJ"
+			   target="_blank" rel="nofollow">
+			</a>
+		</li>
+		<li>
+			{% include 'sign.html' %}
 		</li>
 	</ul>
 </td>
@@ -59,9 +73,9 @@
 
 <!-- Content block -->
 	<div class="content-text">
-{% block content %}
-{% endblock %}
-	</div>
+			{% block content %}
+			{% endblock %}
+		</div>
 <!-- End content block -->
 
 </td></tr></table>
@@ -76,6 +90,8 @@
 
 <!-- JS include -->
 <script src="{{url_for('static', filename='js/get_year.js')}}"></script>
-
+<script src="https://unpkg.com/@mojs/core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mojs/core"></script>
+<script src="{{url_for('static', filename='js/links.js')}}"></script>
 </body>
 </html>

@@ -45,7 +45,7 @@ def parse_args() -> Namespace:
     return args
 
 
-def prepare_race_table(race_results: dict[str: str], abbrs: dict[str: tuple[str]], current_driver: str):
+def prepare_race_table(race_results: dict[str, str], abbrs: dict[str, tuple[str]], current_driver: str):
     """Prepare race data to print"""
     race_table = []
     for counter, code in enumerate(race_results, 1):

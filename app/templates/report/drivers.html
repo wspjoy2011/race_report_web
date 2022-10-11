@@ -5,8 +5,21 @@
 {% endblock title %}
 
 {% block content %}
+{% if not page %}
+<h1>Order drivers table</h1>
+<p>You can click on buttons to sort backend or click on table headers to use frontend way.</p>
+<div>
+    <img src="{{ url_for('static', filename='img/table_header_drivers.png') }}" alt="table header">
+</div>
+<a href="{{ url_for('show_drivers', order='asc') }}">
+    <button class="button button1"><span>Asc</span></button>
+</a>
+<a href="{{ url_for('show_drivers', order='desc') }}">
+    <button class="button button2"><span>Desc</span></button>
+</a>
+{% endif %}
 <h1>{{ title }}</h1>
-<table class="race_table">
+<table class="race_table styled-table">
   <tr>
     <th>Abbr</th>
     <th>Driver Name</th>
@@ -14,7 +27,7 @@
 {% for abbr, driver in drivers.items() %}
     <tr id="race_table_tr_data">
         <td>
-            <a href="/report/drivers/?driver_id={{ abbr }}">{{ abbr }}</a>
+            <a href="{{ url_for('show_drivers', driver_id=abbr) }}">{{ abbr }}</a>
         </td>
         <td>
             {{ driver[0] }}
@@ -22,4 +35,5 @@
     </tr>
 {% endfor %}
 </table>
+<script src="{{ url_for('static', filename='js/sort_table.js') }}"></script>
 {% endblock content %}

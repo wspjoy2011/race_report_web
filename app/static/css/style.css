@@ -405,9 +405,130 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 .race_table th {
+    background-color: #11987F;
+    cursor: pointer;
     color: black;
 }
 
 #race_table_tr_data {
     color: black;
+}
+
+.race_table tr:hover {
+    font-weight: 600;
+    color: black;
+}
+
+.styled-table tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+
+
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {
+    transition-duration: 0.8s;
+    background-color: green;
+}
+
+.button2 {
+    transition-duration: 0.8s;
+    background-color: red;
+}
+
+.button1:hover {
+    background-color: grey;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+
+}
+
+.button1:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button2:hover {
+    background-color: grey;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.button2:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button1 span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button1 span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button1:hover span {
+  padding-right: 25px;
+}
+
+.button1:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.button2 span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button2 span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button2:hover span {
+  padding-right: 25px;
+}
+
+.button2:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+#sign {
+  margin:0;
+  padding:0;
+  font-size:0;
+  display:none;
+}
+canvas {
+  width:200px;
+  height:100px;
 }

@@ -6,8 +6,19 @@
 
 
 {% block content %}
+<h1>Order race table</h1>
+<p>You can click on buttons to sort backend or click on table headers to use frontend way.</p>
+<div>
+    <img src="{{ url_for('static', filename='img/table_header_report.png') }}" alt="table header">
+</div>
+<a href="{{ url_for('show_report', order='asc') }}">
+    <button class="button button1"><span>Asc</span></button>
+</a>
+<a href="{{ url_for('show_report', order='desc') }}">
+    <button class="button button2"><span>Desc</span></button>
+</a>
 <h2>Race results</h2>
-<table class="race_table">
+<table class="race_table" id="myTable">
   <tr>
     <th>№</th>
     <th>Driver</th>
@@ -35,5 +46,5 @@
     </tr>
 {% endfor %}
 </table>
-
+<script src="{{ url_for('static', filename='js/sort_table.js') }}"></script>
 {% endblock content %}

@@ -1,5 +1,6 @@
-# Web report of Monaco 2018 Racing
+# Task 7 - Web report of Monaco 2018 Racing
 
+**Write web application using Flask framework and your previous report package.
 
 The application has to have a few routes. E.g.
 

@@ -1,1 +1,2 @@
 FLASK_APP=report.py
+FLASK_DEBUG=1

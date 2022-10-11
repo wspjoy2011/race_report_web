@@ -67,7 +67,7 @@ def calc_results(start_data: dict[str: datetime], end_data: dict[str: datetime])
     return race_results
 
 
-def sort_race_logs(race_log: dict[str: datetime], reverse: str) -> dict[str: datetime]:
+def sort_race_logs(race_log: dict[str, datetime], reverse: str) -> dict[str, datetime]:
     """Sort log race dict by values(race time)"""
     reverse = False if reverse == 'asc' else True
     return dict(sorted(race_log.items(), key=lambda item: item[1], reverse=reverse))
