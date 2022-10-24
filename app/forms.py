@@ -9,6 +9,7 @@ from wtforms.validators import (
 
 
 class RegistrationForm(FlaskForm):
+    """Register form"""
     email = EmailField(
         'Email',
         validators=[DataRequired(), Email()],

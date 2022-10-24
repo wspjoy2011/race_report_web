@@ -1,0 +1,22 @@
+Return race result
+Use order field to order by in [asc, desc] and format [json, xml]
+---
+parameters:
+  - in: query
+    name: order
+    type: string
+    enum: ['asc', 'desc']
+  - in: query
+    name: format
+    type: string
+    enum: ['json', 'xml']
+responses:
+  200:
+    description: List of race drivers
+    schema:
+      id: DriverReport
+      properties:
+        order:
+          type: string
+          description: Order by in [asc, desc] and format [json, xml]
+          default: none

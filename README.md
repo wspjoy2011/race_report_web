@@ -1,26 +1,21 @@
-# Task 7 - Web report of Monaco 2018 Racing
+# TASK 8 - REST API report of Monaco 2018 Racing
 
-**Write web application using Flask framework and your previous report package.
+Modify previous flask application to REST API using Flask API package and add swagger using flasgger. The application has to have a version and format(json, xml) parameters 
 
-The application has to have a few routes. E.g.
+**E.g.**
 
-http://localhost:5000/report shows common statistic
-
-http://localhost:5000/report/drivers/  shows list of drivers name and code. Code should be a link on info about drivers
-
-http://localhost:5000/report/drivers/?driver_id=SVF shows info about a driver
-
-Also, each route could get order parameter
-
-http://localhost:5000/report/drivers/?order=desc
+[http://localhost:5000/api/v1/report/?format=json](url)
 
 
-Use jinja2 package for html template.
+**Write tests using Unittest module or py.test.**
 
+**Resources:**
+- **Flask REST API:** https://flask-restful.readthedocs.io/en/latest/
+ 
+- **JSON module** https://docs.python.org/3/library/json.html
+ 
+- **XML module** https://docs.python.org/3/library/xml.html
+ 
+- **Web API Design** (recommended) https://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf 
 
-Write tests using Unittest module or py.test.
-
-Resources:
-1. Flask https://flask.palletsprojects.com/en/1.1.x/
-1. Jinja https://jinja.palletsprojects.com/en/2.11.x/**
-
+- **Web API Design** (short translation onto Russian) https://habr.com/ru/post/181988/

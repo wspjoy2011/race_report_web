@@ -6,8 +6,9 @@ python cli_report.py --files <folder_path> [--asc | --desc]  shows list of drive
 python cli_report.py --files <folder_path> --driver “Sebastian Vettel”  shows statistic about driver
 """
 import argparse
+import datetime
 from argparse import Namespace
-
+from collections import namedtuple
 from prettytable import PrettyTable
 
 from report_framework.report import sort_race_logs, main as main_report
@@ -45,19 +46,21 @@ def parse_args() -> Namespace:
     return args
 
 
-def prepare_race_table(race_results: dict[str, str], abbrs: dict[str, tuple[str]], current_driver: str):
+def prepare_race_table(race_results: dict[str, datetime], abbrs: dict[str, tuple[str]], current_driver: str):
     """Prepare race data to print"""
     race_table = []
     for counter, code in enumerate(race_results, 1):
+        Race = namedtuple('Race', 'place driver company race_time')
         driver = abbrs[code][0]
         company = abbrs[code][1]
         race_time = race_results[code]
+        race = Race(counter, driver, company, race_time)
         if current_driver:
             if driver == current_driver:
-                race_table.append((counter, driver, company, race_time))
+                race_table.append(race)
                 break
             continue
-        race_table.append((counter, driver, company, race_time))
+        race_table.append(race)
 
     if current_driver and not race_table:
         return False

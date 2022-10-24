@@ -19,26 +19,6 @@ MENU = app.config['MENU']
 TOP_DRIVERS = app.config['TOP_DRIVERS']
 
 
-@app.errorhandler(500)
-def internal_server_error(error):
-    return render_template(
-        'error.html',
-        title='Error 500',
-        error=error
-    ), 500
-
-
-@app.errorhandler(404)
-def page_not_found(error):
-    return render_template(
-        'error.html',
-        title='Error 404',
-        error=error,
-        menu=MENU,
-        top_drivers=TOP_DRIVERS
-    ), 404
-
-
 @app.route('/')
 def index():
     """Home page about race"""

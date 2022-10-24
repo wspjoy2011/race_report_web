@@ -1,0 +1,22 @@
+Driver info
+Use driver_abbr field and format [json, xml]
+---
+parameters:
+  - in: path
+    name: driver_abbr
+    type: string
+    required: true
+  - in: query
+    name: format
+    type: string
+    enum: [ 'json', 'xml' ]
+responses:
+  200:
+    description: Driver info
+    schema:
+      id: DriverInfo
+      properties:
+        driver:
+          type: string
+          description: Driver abbr
+          default: none
