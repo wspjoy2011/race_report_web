@@ -18,94 +18,85 @@ class AppTestCase(unittest.TestCase):
 
     def test_index_page(self):
         """Test index page"""
-        with self.ctx:
-            response = self.client.get(url_for('main.index'))
-            data = response.get_data(as_text=True)
-            code = response.status_code
-            self.assertEqual(code, 200)
-            self.assertIn('F1 Monaco Race 2018', data)
+        response = self.client.get(url_for('main.index'))
+        data = response.get_data(as_text=True)
+        code = response.status_code
+        self.assertEqual(code, 200)
+        self.assertIn('F1 Monaco Race 2018', data)
 
     def test_top_driver(self):
         """Test correct top driver in left panel"""
-        with self.ctx:
-            response = self.client.get(url_for('main.index'))
-            data = response.get_data(as_text=True)
-            code = response.status_code
-            self.assertEqual(code, 200)
-            self.assertIn('1. Sebastian Vettel', data)
+        response = self.client.get(url_for('main.index'))
+        data = response.get_data(as_text=True)
+        code = response.status_code
+        self.assertEqual(code, 200)
+        self.assertIn('1. Sebastian Vettel', data)
 
     def test_report_default(self):
         """Test report by default"""
-        with self.ctx:
-            response = self.client.get(url_for('main.show_report'))
-            data = response.get_data(as_text=True)
-            code = response.status_code
-            answer = '<td>1</td>\n        <td>Sebastian Vettel</td>\n' \
-                     '        <td>FERRARI</td>\n        <td>0:01:04.415000</td>\n'
-            self.assertEqual(code, 200)
-            self.assertIn(answer, data)
+        response = self.client.get(url_for('main.show_report'))
+        data = response.get_data(as_text=True)
+        code = response.status_code
+        answer = '<td>1</td>\n        <td>Sebastian Vettel</td>\n' \
+                 '        <td>FERRARI</td>\n        <td>0:01:04.415000</td>\n'
+        self.assertEqual(code, 200)
+        self.assertIn(answer, data)
 
     def test_report_order_asc(self):
         """Test report by asc order"""
-        with self.ctx:
-            response = self.client.get(url_for('main.show_report', order='asc'))
-            data = response.get_data(as_text=True)
-            code = response.status_code
-            answer = '<td>1</td>\n        <td>Sebastian Vettel</td>\n' \
-                     '        <td>FERRARI</td>\n        <td>0:01:04.415000</td>\n'
-            self.assertEqual(code, 200)
-            self.assertIn(answer, data)
+        response = self.client.get(url_for('main.show_report', order='asc'))
+        data = response.get_data(as_text=True)
+        code = response.status_code
+        answer = '<td>1</td>\n        <td>Sebastian Vettel</td>\n' \
+                 '        <td>FERRARI</td>\n        <td>0:01:04.415000</td>\n'
+        self.assertEqual(code, 200)
+        self.assertIn(answer, data)
 
     def test_report_order_desc(self):
         """Test report by desc order"""
-        with self.ctx:
-            response = self.client.get(url_for('main.show_report', order='desc'))
-            data = response.get_data(as_text=True)
-            code = response.status_code
-            answer = '<td>1</td>\n        <td>Lewis Hamilton</td>\n' \
-                     '        <td>MERCEDES</td>\n        <td>0:06:47.540000</td>\n'
-            self.assertEqual(code, 200)
-            self.assertIn(answer, data)
+        response = self.client.get(url_for('main.show_report', order='desc'))
+        data = response.get_data(as_text=True)
+        code = response.status_code
+        answer = '<td>1</td>\n        <td>Lewis Hamilton</td>\n' \
+                 '        <td>MERCEDES</td>\n        <td>0:06:47.540000</td>\n'
+        self.assertEqual(code, 200)
+        self.assertIn(answer, data)
 
     def test_drivers(self):
         """Test drivers"""
-        with self.ctx:
-            response = self.client.get(url_for('main.show_drivers'))
-            data = response.get_data(as_text=True)
-            code = response.status_code
-            answer = '<a href="/report/drivers/?driver_id=BHS">BHS</a>'
-            self.assertEqual(code, 200)
-            self.assertIn(answer, data)
+        response = self.client.get(url_for('main.show_drivers'))
+        data = response.get_data(as_text=True)
+        code = response.status_code
+        answer = '<a href="/report/drivers/?driver_id=BHS">BHS</a>'
+        self.assertEqual(code, 200)
+        self.assertIn(answer, data)
 
     def test_driver_profile(self):
         """Test driver profile page"""
-        with self.ctx:
-            response = self.client.get(url_for('main.show_drivers', driver_id='BHS'))
-            data = response.get_data(as_text=True)
-            code = response.status_code
-            answer = 'BHS'
-            self.assertEqual(code, 200)
-            self.assertIn(answer, data)
+        response = self.client.get(url_for('main.show_drivers', driver_id='BHS'))
+        data = response.get_data(as_text=True)
+        code = response.status_code
+        answer = 'BHS'
+        self.assertEqual(code, 200)
+        self.assertIn(answer, data)
 
     def test_driver_profile_wrong(self):
         """Test driver profile wrong page"""
-        with self.ctx:
-            response = self.client.get(url_for('main.show_drivers', driver_id='wrong'))
-            data = response.get_data(as_text=True)
-            code = response.status_code
-            answer = 'Not Found'
-            self.assertEqual(code, 200)
-            self.assertIn(answer, data)
+        response = self.client.get(url_for('main.show_drivers', driver_id='wrong'))
+        data = response.get_data(as_text=True)
+        code = response.status_code
+        answer = 'Not Found'
+        self.assertEqual(code, 200)
+        self.assertIn(answer, data)
 
     def test_report_order_wrong(self):
         """Test report by wrong order"""
-        with self.ctx:
-            response = self.client.get(url_for("main.show_report", order='wrong'))
-            data = response.get_data(as_text=True)
-            code = response.status_code
-            answer = '404 Not Found'
-            self.assertEqual(code, 404)
-            self.assertIn(answer, data)
+        response = self.client.get(url_for("main.show_report", order='wrong'))
+        data = response.get_data(as_text=True)
+        code = response.status_code
+        answer = '404 Not Found'
+        self.assertEqual(code, 404)
+        self.assertIn(answer, data)
 
     def test_wrong_urls(self):
         """Test wrong url"""
