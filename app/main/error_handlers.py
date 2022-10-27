@@ -1,9 +1,5 @@
 from flask import render_template
-from app import app
-
-PATH_TO_RACE_DATA = app.config['PATH_TO_RACE_DATA']
-MENU = app.config['MENU']
-TOP_DRIVERS = app.config['TOP_DRIVERS']
+from app.config_main import MENU, TOP_DRIVERS
 
 
 def internal_server_error(error):

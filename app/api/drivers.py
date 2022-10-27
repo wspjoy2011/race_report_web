@@ -3,16 +3,13 @@ from pathlib import Path
 import os
 
 from flasgger import swag_from
-from app import app
-from flask import jsonify, request
+from flask import jsonify, request, current_app
 from flask_restful import Resource, Api, abort
 from xml.etree import ElementTree
 
 from report_framework.report import main as main_report
 import app.api.config as yaml_config
 
-api = Api(app)
-PATH_TO_RACE_DATA = app.config['PATH_TO_RACE_DATA']
 PATH_TO_YAML_CONFIG = os.path.join(Path(yaml_config.__file__).parent.absolute(), 'drivers.yml')
 
 
@@ -24,7 +21,7 @@ class DriverReport(Resource):
         self.check_order()
         self.check_format()
 
-        _, self.divers = main_report(PATH_TO_RACE_DATA)
+        _, self.divers = main_report(current_app.config['PATH_TO_RACE_DATA'])
         self.divers_info = self.make_drivers_response_data()
 
     @swag_from(PATH_TO_YAML_CONFIG)
@@ -62,13 +59,13 @@ class DriverReport(Resource):
         for driver in self.divers_info:
             title = ElementTree.Element('Driver')
             root.append(title)
-            abbr = ElementTree.SubElement(title, 'Place')
+            abbr = ElementTree.SubElement(title, 'Abbr')
             abbr.text = driver.abbr
             name = ElementTree.SubElement(title, 'Driver')
             name.text = driver.name
         tree = ElementTree.ElementTree(root)
         ElementTree.indent(tree, '  ')
-        return app.response_class(ElementTree.tostring(root), mimetype='application/xml')
+        return current_app.response_class(ElementTree.tostring(root), mimetype='application/xml')
 
     def prepare_drivers_to_json_convert(self):
         """Prepare drivers info to json convert"""
@@ -82,4 +79,6 @@ class DriverReport(Resource):
         return drivers
 
 
-api.add_resource(DriverReport, '/api/v1/drivers/')
+def init_api(app):
+    api = Api(app)
+    api.add_resource(DriverReport, '/api/v1/drivers/')

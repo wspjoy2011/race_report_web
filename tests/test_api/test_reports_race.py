@@ -1,6 +1,8 @@
 import unittest
-from app import app
+from app import create_app
 import xml.etree.ElementTree as ET
+
+app = create_app()
 
 
 class TestDriversApi(unittest.TestCase):

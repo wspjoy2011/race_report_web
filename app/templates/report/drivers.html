@@ -11,10 +11,10 @@
 <div>
     <img src="{{ url_for('static', filename='img/table_header_drivers.png') }}" alt="table header">
 </div>
-<a href="{{ url_for('show_drivers', order='asc') }}">
+<a href="{{ url_for('main.show_drivers', order='asc') }}">
     <button class="button button1"><span>Asc</span></button>
 </a>
-<a href="{{ url_for('show_drivers', order='desc') }}">
+<a href="{{ url_for('main.show_drivers', order='desc') }}">
     <button class="button button2"><span>Desc</span></button>
 </a>
 {% endif %}
@@ -27,7 +27,7 @@
 {% for abbr, driver in drivers.items() %}
     <tr id="race_table_tr_data">
         <td>
-            <a href="{{ url_for('show_drivers', driver_id=abbr) }}">{{ abbr }}</a>
+            <a href="{{ url_for('main.show_drivers', driver_id=abbr) }}">{{ abbr }}</a>
         </td>
         <td>
             {{ driver[0] }}

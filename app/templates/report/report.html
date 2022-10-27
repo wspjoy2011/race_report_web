@@ -11,10 +11,10 @@
 <div>
     <img src="{{ url_for('static', filename='img/table_header_report.png') }}" alt="table header">
 </div>
-<a href="{{ url_for('show_report', order='asc') }}">
+<a href="{{ url_for('main.show_report', order='asc') }}">
     <button class="button button1"><span>Asc</span></button>
 </a>
-<a href="{{ url_for('show_report', order='desc') }}">
+<a href="{{ url_for('main.show_report', order='desc') }}">
     <button class="button button2"><span>Desc</span></button>
 </a>
 <h2>Race results</h2>

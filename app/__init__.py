@@ -1,21 +1,27 @@
-import os
 from flask import Flask
 from flasgger import Swagger
+from app.api.reports_race import init_api as reports_race_init_api
+from app.api.drivers import init_api as drivers_init_api
+from app.api.driver_info import init_api as driver_info_init_api
 
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-app.static_folder = 'static'
-app.config.from_object('config_main')
+def create_app(config_name=None):
+    app = Flask(__name__)
+    app.static_folder = 'static'
 
-swagger = Swagger(app)
-swagger.config['title'] = 'Monaco race report Open API'
-swagger.config['version'] = '1.0.0'
-swagger.config['favicon'] = '/static/img/favicon.png'
+    if config_name is None:
+        app.config.from_pyfile('config_main.py', silent=True)
+    else:
+        app.config.from_mapping(config_name)
 
-from app import routes
-from app.api import reports_race, drivers, driver_info
-from app.error_handlers import page_not_found, internal_server_error
+    swagger = Swagger(app)
+    swagger.config['title'] = 'Monaco race report Open API'
+    swagger.config['version'] = '1.0.0'
+    swagger.config['favicon'] = '/static/img/favicon.png'
 
-app.register_error_handler(404, page_not_found)
-app.register_error_handler(500, internal_server_error)
+    from app import main
+    app.register_blueprint(main.main)
+    reports_race_init_api(app)
+    drivers_init_api(app)
+    driver_info_init_api(app)
+    return app

@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import racing_data
@@ -28,3 +29,4 @@ MENU = {
     "Drivers": '/report/drivers/',
     "Login": '/login'
 }
+SECRET_KEY = os.getenv('SECRET_KEY')

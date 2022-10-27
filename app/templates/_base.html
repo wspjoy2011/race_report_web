@@ -31,7 +31,7 @@
 				{% if user %}
 					Welcome <b>{{ user }}</b> / <a class='action' href="{{ url_for('logout') }}">Logout</a>
 				{% else %}
-					<a href="{{ url_for('registration') }}">Registration</a> / <a class='action' href="{{ link }}">{{ name }}</a>
+					<a href="{{ url_for('main.registration') }}">Registration</a> / <a class='action' href="{{ link }}">{{ name }}</a>
 				{% endif %}
 				</li>
 	{% endif %}

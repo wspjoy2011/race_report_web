@@ -1,17 +1,14 @@
 import os
 from pathlib import Path
-from app import app
 from flasgger import swag_from
-from flask import jsonify, request
-from flask_restful import Resource, Api, abort
+from flask import jsonify, request, current_app
+from flask_restful import Resource, abort, Api
 from xml.etree import ElementTree
 
 from report_framework.report import main as main_report, sort_race_logs
 from report_framework.cli_report import prepare_race_table
 import app.api.config as yaml_config
 
-api = Api(app)
-PATH_TO_RACE_DATA = app.config['PATH_TO_RACE_DATA']
 PATH_TO_YAML_CONFIG = os.path.join(Path(yaml_config.__file__).parent.absolute(), 'reports_race.yml')
 
 
@@ -23,7 +20,7 @@ class RaceReport(Resource):
         self.check_order()
         self.check_format()
 
-        race_results, abbrs = main_report(PATH_TO_RACE_DATA)
+        race_results, abbrs = main_report(current_app.config['PATH_TO_RACE_DATA'])
         race_results_sorted = sort_race_logs(race_results, self.order)
         self.race_table = prepare_race_table(race_results_sorted, abbrs, '')
 
@@ -66,7 +63,7 @@ class RaceReport(Resource):
             time.text = race.race_time
         tree = ElementTree.ElementTree(root)
         ElementTree.indent(tree, '  ')
-        return app.response_class(ElementTree.tostring(root), mimetype='application/xml')
+        return current_app.response_class(ElementTree.tostring(root), mimetype='application/xml')
 
     def prepare_report_to_json_convert(self):
         """Prepare drivers info to json convert"""
@@ -82,4 +79,6 @@ class RaceReport(Resource):
         return races
 
 
-api.add_resource(RaceReport, '/api/v1/report/')
+def init_api(app):
+    api = Api(app)
+    api.add_resource(RaceReport, '/api/v1/report/')
