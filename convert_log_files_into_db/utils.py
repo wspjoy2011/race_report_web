@@ -18,7 +18,7 @@ class RaceReport(NamedTuple):
 
 def create_db(db_name):
     if os.path.isfile(os.path.join(PATH_TO_DATABASE, db_name)):
-        raise DatabaseTableAlreadyExist(f'Database {db_name} exist')
+        raise DatabaseAlreadyExist(f'Database {db_name} exist')
 
     db = SqliteDatabase(os.path.join(PATH_TO_DATABASE, db_name))
     database_proxy.initialize(db)
