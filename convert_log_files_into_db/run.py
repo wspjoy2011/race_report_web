@@ -29,7 +29,7 @@ def parse_args() -> Namespace:
     return args
 
 
-def main(data: str, db_name: str):
+def main(data: str, db_name: str = 'race.db'):
     """Main controller of cli_report module"""
     try:
         create_db(db_name)

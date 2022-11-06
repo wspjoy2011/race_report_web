@@ -1,12 +1,11 @@
 import os
 from typing import NamedTuple
 from datetime import datetime
-
 from peewee import SqliteDatabase
 
 from models.race_model import Driver, Company, Race, database_proxy
 from database import PATH_TO_DATABASE
-from database.exceptions.create import DatabaseTableAlreadyExist, DatabaseAlreadyExist
+from database.exceptions.create import DatabaseAlreadyExist, DatabaseTableAlreadyExist
 
 
 class RaceReport(NamedTuple):
@@ -16,7 +15,7 @@ class RaceReport(NamedTuple):
     race_time: datetime
 
 
-def create_db(db_name):
+def create_db(db_name: str) -> bool:
     if os.path.isfile(os.path.join(PATH_TO_DATABASE, db_name)):
         raise DatabaseAlreadyExist(f'Database {db_name} exist')
 
@@ -26,7 +25,7 @@ def create_db(db_name):
     return True
 
 
-def write_drivers(drivers: list[dict[str, str]]):
+def write_drivers(drivers: list[dict[str, str]]) -> bool:
     if not Driver.select().count():
         for driver in drivers:
             driver = Driver(abbr=driver['abbr'], name=driver['name'])
@@ -35,7 +34,7 @@ def write_drivers(drivers: list[dict[str, str]]):
     raise DatabaseTableAlreadyExist('Table "Driver" is not empty. I don\'t do anything')
 
 
-def write_companies(companies: list[dict[str, str]]):
+def write_companies(companies: list[dict[str, str]]) -> bool:
     if not Company.select().count():
         for company in companies:
             company = Company(name=company['name'])
@@ -44,7 +43,7 @@ def write_companies(companies: list[dict[str, str]]):
     raise DatabaseTableAlreadyExist('Table "Company" is not empty. I don\'t do anything')
 
 
-def write_race_table(race_table: list[RaceReport]):
+def write_race_table(race_table: list[RaceReport]) -> bool:
     if not Race.select().count():
         for race in race_table:
             driver_rows = Driver.select().where(Driver.name == race.driver)
@@ -63,12 +62,3 @@ def write_race_table(race_table: list[RaceReport]):
                 race_complete.save()
         return True
     raise DatabaseTableAlreadyExist('Table "Company" is not empty. I don\'t do anything')
-
-
-# race_table = (Race.select(Race.place, Driver.name.alias('driver'), Company.name.alias('company'), Race.time)
-#               .join(Driver, on=(Race.driver == Driver.id))
-#               .join(Company, on=(Race.company == Company.id))
-#               .dicts())
-#
-# for race in race_table:
-#     print(race)

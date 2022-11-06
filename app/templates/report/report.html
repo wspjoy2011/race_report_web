@@ -39,10 +39,10 @@
             <tr style="background-color: green">
         {% endif %}
     {% endif %}
-        <td>{{ race[0] }}</td>
-        <td>{{ race[1] }}</td>
-        <td>{{ race[2] }}</td>
-        <td>{{ race[3] }}</td>
+        <td>{{ race.place }}</td>
+        <td>{{ race.driver }}</td>
+        <td>{{ race.company }}</td>
+        <td>{{ race.time }}</td>
     </tr>
 {% endfor %}
 </table>

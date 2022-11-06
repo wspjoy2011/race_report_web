@@ -11,8 +11,7 @@ from flask import (
     flash
 )
 
-from report_framework.report import main as main_report, sort_race_logs
-from report_framework.cli_report import prepare_race_table
+from models.race_model import Race, Driver, Company
 
 
 @main.route('/')
@@ -35,9 +34,12 @@ def show_report():
         order = 'asc'
     if order not in ['asc', 'desc']:
         abort(404)
-    race_results, abbrs = main_report(current_app.config['PATH_TO_RACE_DATA'])
-    race_results_sorted = sort_race_logs(race_results, order)
-    race_table = prepare_race_table(race_results_sorted, abbrs, '')
+    race_table_rows = (Race.select(Race.place, Driver.name.alias('driver'), Company.name.alias('company'), Race.time)
+                       .join(Driver, on=(Race.driver == Driver.id))
+                       .join(Company, on=(Race.company == Company.id))
+                       .dicts())
+    race_table = sorted(race_table_rows, key=lambda race: race['place'],
+                        reverse=True if order == 'desc' else False)
 
     return render_template(
         'report/report.html',
@@ -61,12 +63,18 @@ def show_drivers():
     if not order:
         order = 'asc'
 
-    order = False if order == 'asc' else True
-    _, drivers = main_report(current_app.config['PATH_TO_RACE_DATA'])
-    drivers = dict(sorted(drivers.items(), reverse=order))
+    if order not in ['asc', 'desc']:
+        abort(404)
+
+    order = True if order == 'desc' else False
+    drivers_rows = Driver.select(Driver.abbr, Driver.name).dicts()
+    drivers = sorted(drivers_rows, key=lambda driver: driver['abbr'], reverse=order)
 
     if driver_id:
-        drivers = {driver_id: drivers.get(driver_id, False)}
+        drivers = [driver for driver in drivers if driver['abbr'] == driver_id]
+        if not drivers:
+            abort(404)
+        drivers = drivers.pop()
         title = 'Driver profile'
         template_name = 'report/driver_profile.html'
 

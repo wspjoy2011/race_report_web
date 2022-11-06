@@ -11,20 +11,15 @@
     <th>Abbr</th>
     <th>Driver Name</th>
   </tr>
-    {% for abbr, name in drivers.items() %}
     <tr id="race_table_tr_data">
         <td>
-            {{ abbr }}
+            {{ drivers.abbr }}
         </td>
         <td>
-            {% if name %}
-                {{ name[0] }}
-            {% else %}
-                Not Found
-            {% endif %}
+            {{ drivers.name }}
         </td>
     </tr>
-{% endfor %}
+
 </table>
 
 <script src="{{ url_for('static', filename='js/sort_table.js') }}"></script>

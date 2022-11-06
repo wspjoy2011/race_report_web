@@ -1,14 +1,16 @@
 import unittest
-from app import create_app
-
 from flask import url_for
 
-app = create_app()
+from app import create_app
+from database.create_test_database import create_db
 
 
 class AppTestCase(unittest.TestCase):
     """Test app"""
     def setUp(self):
+        app = create_app('testing')
+        self.db = app.config['db']
+        create_db(db=self.db)
         self.ctx = app.test_request_context()
         self.ctx.push()
         self.client = app.test_client()
@@ -57,7 +59,7 @@ class AppTestCase(unittest.TestCase):
         response = self.client.get(url_for('main.show_report', order='desc'))
         data = response.get_data(as_text=True)
         code = response.status_code
-        answer = '<td>1</td>\n        <td>Lewis Hamilton</td>\n' \
+        answer = '<td>19</td>\n        <td>Lewis Hamilton</td>\n' \
                  '        <td>MERCEDES</td>\n        <td>0:06:47.540000</td>\n'
         self.assertEqual(code, 200)
         self.assertIn(answer, data)
@@ -77,7 +79,7 @@ class AppTestCase(unittest.TestCase):
         data = response.get_data(as_text=True)
         code = response.status_code
         answer = 'BHS'
-        self.assertEqual(code, 200)
+        self.assertEqual(200, code)
         self.assertIn(answer, data)
 
     def test_driver_profile_wrong(self):
@@ -86,7 +88,7 @@ class AppTestCase(unittest.TestCase):
         data = response.get_data(as_text=True)
         code = response.status_code
         answer = 'Not Found'
-        self.assertEqual(code, 200)
+        self.assertEqual(code, 404)
         self.assertIn(answer, data)
 
     def test_report_order_wrong(self):

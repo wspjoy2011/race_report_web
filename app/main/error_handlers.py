@@ -1,5 +1,4 @@
-from flask import render_template
-from app.config_main import MENU, TOP_DRIVERS
+from flask import render_template, current_app
 
 
 def internal_server_error(error):
@@ -8,8 +7,8 @@ def internal_server_error(error):
         'error.html',
         title='Error 500',
         error=error,
-        menu=MENU,
-        top_drivers=TOP_DRIVERS
+        menu=current_app.config['MENU'],
+        top_drivers=current_app.config['TOP_DRIVERS']
     ), 500
 
 
@@ -19,7 +18,7 @@ def page_not_found(error):
         'error.html',
         title='Error 404',
         error=error,
-        menu=MENU,
-        top_drivers=TOP_DRIVERS
+        menu=current_app.config['MENU'],
+        top_drivers=current_app.config['TOP_DRIVERS']
     ), 404
 

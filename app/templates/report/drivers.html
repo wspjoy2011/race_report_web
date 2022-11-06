@@ -24,13 +24,13 @@
     <th>Abbr</th>
     <th>Driver Name</th>
   </tr>
-{% for abbr, driver in drivers.items() %}
+{% for driver in drivers %}
     <tr id="race_table_tr_data">
         <td>
-            <a href="{{ url_for('main.show_drivers', driver_id=abbr) }}">{{ abbr }}</a>
+            <a href="{{ url_for('main.show_drivers', driver_id=driver.abbr) }}">{{ driver.abbr }}</a>
         </td>
         <td>
-            {{ driver[0] }}
+            {{ driver.name }}
         </td>
     </tr>
 {% endfor %}
